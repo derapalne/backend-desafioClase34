@@ -4,7 +4,7 @@ import "dotenv/config";
 import ArchivadorProductos from "./src/daos/archivadorDaoProductos.js";
 import { optionsMariaDB } from "./src/options/mariaDB.js";
 import ArchivadorMensajes from "./src/daos/archivadorDaoMensajes.js";
-import { optionsSQLite } from "./src/options/SQLite3.js";
+import { optionsSQLite, optionsSQLiteMensajes, optionsSQLiteProductos } from "./src/options/SQLite3.js";
 import Mocker from "./src/utils/mocker.js";
 const mocker = new Mocker();
 import inicializarProductos from "./src/utils/init.js";
@@ -86,9 +86,9 @@ app.use((err, req, res, next) => {
 });
 
 // >>>>>DBs
-const archMensajes = new ArchivadorMensajes("chat", optionsSQLite, logger);
+const archMensajes = new ArchivadorMensajes("chat", optionsSQLiteMensajes, logger);
 archMensajes.chequearTabla();
-const archProductos = new ArchivadorProductos("productos", optionsMariaDB, logger);
+const archProductos = new ArchivadorProductos("productos", optionsSQLiteProductos, logger);
 archProductos.chequearTabla();
 
 // >>>>>Motor de plantillas
