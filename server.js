@@ -4,7 +4,7 @@ import "dotenv/config";
 import ArchivadorProductos from "./src/daos/archivadorDaoProductos.js";
 import { optionsMariaDB } from "./src/options/mariaDB.js";
 import ArchivadorMensajes from "./src/daos/archivadorDaoMensajes.js";
-import { optionsSQLite, optionsSQLiteMensajes, optionsSQLiteProductos } from "./src/options/SQLite3.js";
+import { optionsSQLiteMensajes, optionsSQLiteProductos } from "./src/options/SQLite3.js";
 import Mocker from "./src/utils/mocker.js";
 const mocker = new Mocker();
 import inicializarProductos from "./src/utils/init.js";
