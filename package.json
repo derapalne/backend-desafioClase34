@@ -7,7 +7,7 @@
   "scripts": {
     "test": "node benchmark.js",
     "test-start": "0x server.js",
-    "start": "node server.js --port 6555 --modo fork"
+    "start": "node server.js --modo fork"
   },
   "keywords": [],
   "author": "",
