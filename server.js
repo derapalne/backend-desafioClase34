@@ -28,7 +28,7 @@ import { Server as HttpServer } from "http";
 import { Server as IOServer } from "socket.io";
 // >>>>>MongoDB
 import MongoStore from "connect-mongo";
-import { advancedOptions } from "./src/daos/DaoUsuariosMongoDB.js";
+import { advancedOptions } from "./src/daos/daoUsuariosMongoDB.js";
 // >>>>>Passport
 import "./src/middlewares/local-auth.js";
 import passport from "passport";
