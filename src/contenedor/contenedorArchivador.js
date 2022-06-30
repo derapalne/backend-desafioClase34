@@ -1,5 +1,5 @@
 import knex from "knex";
-import logger from '../utils/logger.js';
+import logger from '../middlewares/logger.js';
 
 export default class ContenedorArchivador {
     constructor(tableName, config) {

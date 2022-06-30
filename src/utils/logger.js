@@ -11,31 +11,15 @@ log4js.configure({
         loggerError: { type: "logLevelFilter", appender: "archivoError", level: "error" },
     },
     categories: {
-        default: { appenders: ["consola", "loggerWarn", "loggerError"], level: "all" },
+        default: { appenders: ["consola"], level: "all" },
+        warnLogger: { appenders: ["consola", "loggerWarn"], level: "warn" },
+        errorLogger: { appenders: ["consola", "loggerError"], level: "error" },
+
     },
 });
+
 const logger = log4js.getLogger();
+const loggerWarn = log4js.getLogger("warnLogger");
+const loggerError = log4js.getLogger("errorLogger");
 
-const logRoute = (req, res, next) => {
-    logger.info(`Ruta ${req.baseUrl + req.path} - Método ${req.method}`);
-    next();
-};
-
-const logUndefinedRoute = (req, res, next) => {
-    logger.warn(`Ruta ${req.baseUrl + req.path} - Método ${req.method} no definido`);
-    next();
-};
-
-const error = (e) => {
-    logger.error('Ha ocurrido un error:', e);
-}
-
-const info = (msg) => {
-    logger.info(msg);
-}
-
-const trace = (msg) => {
-    logger.trace(msg);
-};
-
-export default {logRoute, logUndefinedRoute, error, info, trace};
+export  {logger, loggerWarn, loggerError};

@@ -1,5 +1,5 @@
 import Archivador from "../contenedor/contenedorArchivador.js";
-import logger from '../utils/logger.js';
+import logger from '../middlewares/logger.js';
 
 export default class ArchivadorProductos extends Archivador {
     constructor(tableName, config) {
@@ -88,7 +88,7 @@ export default class ArchivadorProductos extends Archivador {
                             table.float("price");
                             table.string("thumbnail");
                         })
-                        .then(() => console.log("Tabla Creada:", this.tableName))
+                        .then(() => logger.info("Tabla Creada:", this.tableName))
                         .catch((e) => logger.error(e));
                 } else {
                     logger.info("Tabla Productos existente.");

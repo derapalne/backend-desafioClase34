@@ -1,5 +1,5 @@
 import Archivador from "../contenedor/contenedorArchivador.js";
-import logger from '../utils/logger.js';
+import logger from '../middlewares/logger.js';
 
 export default class ArchivadorMensajes extends Archivador {
     constructor(tableName, config) {

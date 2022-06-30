@@ -8,10 +8,12 @@ import { optionsSQLiteMensajes, optionsSQLiteProductos } from "./src/options/SQL
 import Mocker from "./src/utils/mocker.js";
 const mocker = new Mocker();
 import inicializarProductos from "./src/utils/init.js";
+// >>>>>Routers
+import routerMain from "./src/routes/main.routes.js";
 import routerRandom from "./src/routes/randomsRoute.js";
 import config from "./src/utils/config.js";
 // >>>>>Logger
-import logger from './src/utils/logger.js'
+import logger from './src/middlewares/logger.js'
 
 // [ --------- MIDDLEWARE --------- ] //
 
@@ -34,9 +36,6 @@ import "./src/middlewares/local-auth.js";
 import passport from "passport";
 // >>>>>Flash
 import flash from "connect-flash";
-// >>>>>Minimist
-import parseArgs from "minimist";
-import { parse } from "path";
 // >>>>>Cluster
 import cluster from "cluster";
 import os from "os";
@@ -75,9 +74,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(compression());
 
+//>>>>>Routers
 app.use("/api/random", routerRandom);
-
-// app.use(logRoute); Me loguea cada página y recurso que accede, hay forma de que no haga esto?
+app.use("/", routerMain);
 
 app.use((err, req, res, next) => {
     app.locals.registerMessage = req.flash("registerMessage");
@@ -100,7 +99,7 @@ app.set("view engine", "ejs");
 
 //inicializarProductos(archProductos);
 
-// [ --------- RUTAS --------- ] //
+// [ --------- RUTAS QUE REQUIEREN DBs --------- ] //
 
 app.get("/", logger.logRoute, isLogged, async (req, res) => {
     try {
@@ -129,46 +128,7 @@ app.get("/api/productos-test", logger.logRoute, async (req, res) => {
     }
 });
 
-app.get("/login", logger.logRoute, (req, res) => {
-    try {
-        if (req.isAuthenticated()) {
-            res.redirect("/");
-        } else {
-            res.status(200).render("login");
-        }
-    } catch (e) {
-        res.status(500).send(e);
-    }
-});
-
-app.get("/login-error", logger.logRoute, (req, res) => {
-    try {
-        res.status(403).render("login-error");
-    } catch (e) {
-        res.status(500).send(e);
-    }
-});
-
-app.get("/register-error", logger.logRoute, (req, res) => {
-    try {
-        res.status(403).render("register-error");
-    } catch (e) {
-        res.status(500).send(e);
-    }
-});
-
-app.get("/register", logger.logRoute, (req, res) => {
-    if (req.isAuthenticated()) {
-        res.status(200).redirect("/");
-    }
-    res.status(200).render("register");
-});
-
-app.get("/datos", logger.logRoute, (req, res) => {
-    res.json(req.session);
-});
-
-app.get("/info", logger.logRoute, (req, res) => {
+routerMain.get("/info", logger.logRoute, (req, res) => {
     const info = {
         args: process.argv.slice(2).join(" "),
         os: process.platform,
@@ -181,39 +141,6 @@ app.get("/info", logger.logRoute, (req, res) => {
     };
     console.log({info});
     res.render("info", info);
-});
-
-app.post(
-    "/register",
-    logger.logRoute,
-    passport.authenticate("local-register", {
-        successRedirect: "/",
-        failureRedirect: "/register-error",
-        passReqToCallback: true,
-    }),
-    (req, res) => {}
-);
-
-app.post(
-    "/login",
-    logger.logRoute,
-    passport.authenticate("local-login", {
-        successRedirect: "/",
-        failureRedirect: "/login-error",
-        passReqToCallback: true,
-    }),
-    (req, res) => {}
-);
-
-app.post("/logout", logger.logRoute, isLogged, (req, res) => {
-    try {
-        const email = req.user.email;
-        req.session.destroy((err) => {
-            res.status(200).render("logout", { nombreUsuario: email });
-        });
-    } catch (e) {
-        res.status(500).send(e);
-    }
 });
 
 app.use(logger.logUndefinedRoute);

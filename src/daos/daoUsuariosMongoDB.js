@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import 'dotenv/config';
-import logger from '../utils/logger.js';
+import logger from '../middlewares/logger.js';
 
 
 export const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
