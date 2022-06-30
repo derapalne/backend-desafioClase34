@@ -1,9 +1,11 @@
+import { config } from "../utils/config.js";
+
 export const optionsMariaDB = {
     client: "mysql",
     connection: {
-        host: process.env.MARIADB_HOST,
-        user: process.env.MARIADB_USER,
-        password: process.env.MARIADB_PASSWORD,
-        database: process.env.MARIADB_DB,
+        host: config.MARIADB_HOST,
+        user: config.MARIADB_USER,
+        password: config.MARIADB_PASSWORD,
+        database: config.MARIADB_DB,
     },
 };

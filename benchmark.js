@@ -1,7 +1,7 @@
 import autocannon from "autocannon";
 import {PassThrough} from "stream";
 import logger from "./src/utils/logger.js";
-import config from "./src/utils/config.js";
+import {config} from "./src/utils/config.js";
 
 // Este código lo copié de las diapositivas, no está explicado qué es
 // Si podés explicarlo un poco buenísimo jaja
