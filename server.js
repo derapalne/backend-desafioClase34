@@ -84,6 +84,12 @@ app.use((err, req, res, next) => {
     app.locals.email = req.flash("email");
 });
 
+app.use((err, req, res, next) => {
+    logger.error(err)
+    res.status(500).send({ message: 'Ha ocurrido un error' })
+  })
+  
+
 // >>>>>DBs
 const archMensajes = new ArchivadorMensajes("chat", optionsSQLiteMensajes, logger);
 archMensajes.chequearTabla();
